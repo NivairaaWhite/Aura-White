@@ -1,0 +1,15 @@
+# Known-good versions from the Hunyuan3D-2.1 project, for when a newer diffusers/transformers breaks Zero123++.
+# Use in a separate virtual environment:  pip install -r requirements-studio-pinned.txt
+scipy
+fast-simplification
+xatlas
+diffusers==0.30.0
+transformers==4.46.0
+huggingface_hub>=0.23,<1.0
+accelerate>=0.30
+einops
+omegaconf
+pyyaml
+pytorch-lightning
+opencv-python-headless
+safetensors>=0.4

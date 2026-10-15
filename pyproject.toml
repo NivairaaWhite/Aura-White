@@ -1,0 +1,49 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aura-white"
+version = "8.0.0"
+description = "Aura White - text / one picture / several pictures to a REAL closed 3D asset (back and sides included) that runs in 8 GB of GPU memory or less, with game-ready packs. Pure PyTorch core, no compiled extensions required."
+readme = "README.md"
+license = { text = "MIT" }
+# Deliberately NO upper bounds anywhere: a new Python / NumPy / PyTorch release must never make pip refuse to install.
+requires-python = ">=3.9"
+dependencies = [
+    "numpy>=1.21",
+    "Pillow>=9.0",
+    "torch>=2.0",
+    "scipy",          # exact-look (source_locked) surface: Delaunay triangulation + distance transforms
+]
+
+[project.optional-dependencies]
+# safetensors: safe, fast, half-size weights. Ships abi3 wheels, so it installs on new Pythons too.
+recommended = ["safetensors>=0.4"]
+# rembg: automatic background removal for photos with busy backgrounds (optional, may lag behind new Pythons).
+bg = ["rembg"]
+scipy = ["scipy"]
+# Texturing engine accelerators. All optional: every one of them has a built-in pure NumPy/PyTorch fallback.
+studio = ["scipy", "fast-simplification", "xatlas", "safetensors>=0.4"]
+# Heavy model back-ends for `aura-white studio` (Zero123++, InstantMesh, Hunyuan3D-2.1 shape).
+models = ["diffusers>=0.27", "transformers>=4.40", "huggingface_hub", "accelerate", "einops", "omegaconf", "pyyaml",
+          "pytorch-lightning", "opencv-python-headless"]
+# `aura-white asset`: game-ready packs. xatlas = real UV islands, fast-simplification = quadric LODs, trimesh = PLY/STL proxies.
+assets = ["scipy", "xatlas", "fast-simplification", "trimesh"]
+# `aura-white make`: true 3D from text / pictures in <= 8 GB (see requirements-3d.txt).
+gen3d = ["scipy", "safetensors>=0.4", "huggingface_hub", "transformers>=4.40", "accelerate", "einops", "omegaconf", "pyyaml", "trimesh",
+         "scikit-image", "tqdm", "diffusers>=0.27", "rembg", "onnxruntime", "opencv-python-headless", "xatlas", "fast-simplification"]
+# `aura-white sheet`: pictures of every side -> textured GLB (no GPU, no model).
+sheet = ["scipy", "opencv-python-headless", "scikit-image", "xatlas", "fast-simplification", "trimesh"]
+# `aura-white native ...`: Aura's own model (needs torch, already a core dependency) + the sheet tools.
+native = ["scipy", "opencv-python-headless", "scikit-image", "xatlas", "fast-simplification", "trimesh"]
+test = ["pytest", "safetensors>=0.4", "trimesh", "scipy", "fast-simplification", "opencv-python-headless", "scikit-image", "xatlas"]
+
+[project.scripts]
+aura-white = "aura_white.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["aura_white*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,0 +1,82 @@
+{
+ "name": "aura_character",
+ "views": [
+  "back",
+  "front",
+  "left",
+  "right"
+ ],
+ "faces": 59998,
+ "vertices": 38383,
+ "height_m": 1.68,
+ "size_m": [
+  0.5698,
+  1.6637,
+  0.5166
+ ],
+ "outline_iou": {
+  "front": 0.9493,
+  "back": 0.9313,
+  "left": 0.9896,
+  "right": 0.9805
+ },
+ "register": {
+  "front": {
+   "scale": 0.8733,
+   "src": [
+    941,
+    1671
+   ]
+  },
+  "back": {
+   "mirror_iou_before": 0.8944,
+   "mirror_iou_after": 0.8944,
+   "shift_px": [
+    0,
+    0
+   ],
+   "scale": 1.0691,
+   "src": [
+    768,
+    1364
+   ]
+  },
+  "left": {
+   "scale": 1.153,
+   "src": [
+    720,
+    1280
+   ]
+  },
+  "right": {
+   "mirror_iou_before": 0.9828,
+   "mirror_iou_after": 0.9828,
+   "shift_px": [
+    0,
+    0
+   ],
+   "scale": 1.1549,
+   "src": [
+    720,
+    1280
+   ]
+  }
+ },
+ "bake": {
+  "texels_covered": 2381443,
+  "unseen_share": 0.037,
+  "seen_share_by_view": {
+   "front": 0.263,
+   "back": 0.255,
+   "left": 0.223,
+   "right": 0.224
+  },
+  "seconds": 34.7
+ },
+ "notes": [
+  "9 heights had a thin part beside a wide one (arm / tassel): its depth was limited to 1.4x its width instead of the whole body's depth"
+ ],
+ "seconds": 40.8,
+ "unlit": false,
+ "watertight_before_unwrap": true
+}

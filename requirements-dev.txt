@@ -1,0 +1,3 @@
+# Test/development extras:  pip install -r requirements-dev.txt
+pytest
+trimesh        # tests/ read the exported GLB/OBJ with it

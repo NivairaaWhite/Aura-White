@@ -1,0 +1,6 @@
+# Lower bounds only - never upper pins, so a new Python / NumPy / PyTorch release cannot block installation.
+numpy>=1.21
+Pillow>=9.0
+torch>=2.0
+safetensors>=0.4      # optional but recommended (small, safe weights file)
+# rembg               # optional: automatic background removal for busy photos

@@ -1,0 +1,38 @@
+# Everything `aura-white make` needs to build REAL 3-D (back and sides included) in 8 GB of GPU memory or less.
+#   pip install -r requirements-3d.txt      then      aura-white setup --hunyuan      then      aura-white doctor3d --deep
+# Install PyTorch first for your hardware (https://pytorch.org/get-started/locally/):  CUDA 12.x, ROCm, or the CPU build.
+# No upper bounds on purpose: a new release of anything must never make pip refuse to install.
+#
+# Hunyuan3D-2 sources (shape model) are NOT a pip package: `aura-white setup --hunyuan` unzips them into third_party/.
+
+# --- core (also in requirements.txt) ---
+numpy
+Pillow
+scipy
+
+# --- Hunyuan3D-2 shape model (pure PyTorch for shapes: no compiler, no CUDA toolkit needed) ---
+torch>=2.0
+safetensors>=0.4
+huggingface_hub
+transformers>=4.40
+accelerate                  # model offload: this is what lets a 4-8 GB card run the full-quality recipe
+einops
+omegaconf
+pyyaml
+trimesh
+scikit-image                # marching cubes in the shape decoder
+tqdm
+# pymeshlab is imported by Hunyuan3D-2's post-processors but is never used for generation; aura-white stubs it
+# when it is missing (it often has no wheel for new Pythons).
+
+# --- text -> reference picture, and painting the unseen sides (SDXL + depth ControlNet + IP-Adapter) ---
+diffusers>=0.27
+
+# --- outlines of any kind of picture ---
+rembg                       # isnet-anime / birefnet / isnet-general / u2net segmenters (anime, photos, hard backgrounds)
+onnxruntime                 # rembg's runtime (use onnxruntime-gpu on NVIDIA if you like; the CPU one is enough)
+opencv-python-headless      # GrabCut edge refinement
+
+# --- asset pack (LODs, UVs) ---
+xatlas
+fast-simplification

@@ -1,0 +1,29 @@
+# Extras for the textured pipeline (`aura-white studio`).  Install with:   pip install -r requirements-studio.txt
+# Everything below is OPTIONAL - the studio degrades gracefully without any of it:
+#   scipy / fast-simplification / xatlas  -> faster + better meshing, UVs, normal maps (built-in fallbacks exist)
+#   scipy alone is also what forge/ (relief geometry, chain detection, snap, completion), mesh/repair.py and
+#   shape/ (Aura Shape) need - none of them need anything below this line
+#   diffusers ... opencv                  -> the heavy models (Zero123++ side views, InstantMesh, Hunyuan3D-2.1)
+# Pixal3D and TRELLIS.2 are NOT installed here: they run as a subprocess in their own virtualenv (their own
+# setup.sh, exact pinned CUDA/torch), so they never fight this environment's versions. See third_party/README.md
+# and set AURA_WHITE_PIXAL3D_DIR/_PYTHON, AURA_WHITE_TRELLIS2_DIR/_PYTHON once built.
+
+scipy
+fast-simplification
+xatlas                      # run in an isolated process; the built-in unwrapper takes over if it misbehaves
+safetensors>=0.4
+
+# --- heavy model back-ends (need an NVIDIA GPU: ~5 GB Zero123++, ~8 GB InstantMesh, ~10 GB Hunyuan3D shape) ---
+diffusers>=0.27
+transformers>=4.40
+huggingface_hub
+accelerate
+einops
+omegaconf
+pyyaml
+pytorch-lightning           # Hunyuan3D's package imports it (nothing is trained)
+opencv-python-headless
+
+# Optional: NVIDIA's rasteriser (faster texture baking; PyTorch rasteriser is used when it is absent or fails
+# its self-test).  Needs the CUDA toolkit + a compiler:
+#   pip install --no-build-isolation ./third_party/nvdiffrast-main
